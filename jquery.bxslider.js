@@ -1,6 +1,6 @@
 /**
- * BxSlider v4.1.2 - Fully loaded, responsive content slider
- * http://bxslider.com
+ * BxSlider v4.1.2-gigatec - Fully loaded, responsive content slider
+ * http://bxslider.com | https://github.com/gigatec/bxslider-4
  *
  * Copyright 2014, Steven Wanderski - http://stevenwanderski.com - http://bxcreative.com
  * Written while drinking Belgian ales and listening to jazz
@@ -148,7 +148,7 @@
 			// initialize the controls object
 			slider.controls = {};
 			// initialize an auto interval
-			slider.interval = null;
+			slider.timeout = null;
 			// determine which property to use for transitions
 			slider.animProp = slider.settings.mode == 'vertical' ? 'top' : 'left';
 			// determine if hardware acceleration can be used
@@ -878,7 +878,7 @@
 				// on el hover
 				el.hover(function(){
 					// if the auto show is currently playing (has an active interval)
-					if(slider.interval){
+					if(slider.timeout){
 						// stop the auto show and pass true agument which will prevent control update
 						el.stopAuto(true);
 						// create a new autoPaused value which will be used by the relative "mouseout" event
@@ -1234,11 +1234,17 @@
 		 */
 		el.startAuto = function(preventControlUpdate){
 			// if an interval already exists, disregard call
-			if(slider.interval) return;
+			if(slider.timeout) return;
 			// create an interval
-			slider.interval = setInterval(function(){
+			function nextSlide() {
 				slider.settings.autoDirection == 'next' ? el.goToNextSlide() : el.goToPrevSlide();
-			}, slider.settings.pause);
+				nextSlideDelayed();
+			}
+			function nextSlideDelayed() {
+				var pause = el.find('li[data-teaser-index=' + slider.active.index + ']').data('teaserDelay');
+				slider.timeout = setTimeout(nextSlide, pause || slider.settings.pause);
+			}
+			nextSlideDelayed();
 			// if auto controls are displayed and preventControlUpdate is not true
 			if (slider.settings.autoControls && preventControlUpdate != true) updateAutoControls('stop');
 		}
@@ -1251,10 +1257,10 @@
 		 */
 		el.stopAuto = function(preventControlUpdate){
 			// if no interval exists, disregard call
-			if(!slider.interval) return;
+			if(!slider.timeout) return;
 			// clear the interval
-			clearInterval(slider.interval);
-			slider.interval = null;
+			clearTimeout(slider.timeout);
+			slider.timeout = null;
 			// if auto controls are displayed and preventControlUpdate is not true
 			if (slider.settings.autoControls && preventControlUpdate != true) updateAutoControls('start');
 		}
@@ -1321,7 +1327,7 @@
 			if(slider.pagerEl && slider.settings.controls) slider.pagerEl.remove();
 			$('.bx-caption', this).remove();
 			if(slider.controls.autoEl) slider.controls.autoEl.remove();
-			clearInterval(slider.interval);
+			clearTimeout(slider.timeout);
 			if(slider.settings.responsive) $(window).unbind('resize', resizeWindow);
 		}
 
