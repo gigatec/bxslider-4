@@ -1,6 +1,19 @@
 #bxSlider 4.1.2
 ##The fully-loaded, responsive jQuery content slider
 
+###gigatec Features
+
+* Allow different pause times per slide (setInterval -> setTimeout)
+
+```html
+<ul class="bxslider">
+  <li data-teaser-index="0" data-teaser-delay="3000"><img src="/images/pic1.jpg" /></li>
+  <li data-teaser-index="1" data-teaser-delay="5000"><img src="/images/pic2.jpg" /></li>
+  <li data-teaser-index="2" data-teaser-delay="2000"><img src="/images/pic3.jpg" /></li>
+  <li data-teaser-index="3" data-teaser-delay="3000"><img src="/images/pic4.jpg" /></li>
+</ul>
+```
+
 ###Why should I use this slider?
 * Fully responsive - will adapt to any device
 * Horizontal, vertical, and fade modes
