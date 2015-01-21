@@ -3,7 +3,7 @@
 
 ###gigatec Features
 
-* Allow different pause times per slide (setInterval -> setTimeout) fb09cb5eb6edeba7f046201ae192b8ef444c42b8
+* Allow different pause times per slide (setInterval -> setTimeout) [fb09cb5eb6edeba7f046201ae192b8ef444c42b8]
 
 ```html
 <ul class="bxslider">
