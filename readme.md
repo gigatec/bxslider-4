@@ -1,4 +1,4 @@
-#bxSlider 4.1.2
+#bxSlider 4.1.2-gigatec
 ##The fully-loaded, responsive jQuery content slider
 
 ###gigatec Features
